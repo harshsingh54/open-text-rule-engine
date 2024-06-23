@@ -239,9 +239,14 @@ public class DebrickedService {
 
     public StatusResponse getResponseForUploadId(String uploadId){
 
+        if(uploadId==null || uploadId.isBlank()){
+            log.info("Upload id is invalid : {}", uploadId);
+            return null;
+        }
+
         String token = getAuthToken();
         StatusResponse statusResponse = getStatusByUploadId(token, uploadId);
-
+        log.info("Status response : {}", statusResponse);
         return statusResponse;
     }
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class DebrickedServiceTest {
+public class DebrickedServiceIntegrationTest {
 
     @Autowired
     private DebrickedService service;

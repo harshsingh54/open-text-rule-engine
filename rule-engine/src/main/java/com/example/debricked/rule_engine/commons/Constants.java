@@ -26,4 +26,8 @@ public class Constants {
     public static final String  UPLOAD_DEPENDENCY_DEFAULT_BRANCH_NAME= "defaultBranchName";
     public static final String  UPLOAD_DEPENDENCY_CI_UPLOAD_ID= "ciUploadId";
 
+    //Mail Constants
+    public static final String EMAIL_FROM= "noreply@company.com";
+    public static final String EMAIL_SUBJECT="Action Required: Vulnerabilities Reported";
+
 }

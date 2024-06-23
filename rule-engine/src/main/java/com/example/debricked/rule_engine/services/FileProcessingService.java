@@ -2,6 +2,7 @@ package com.example.debricked.rule_engine.services;
 
 
 import com.example.debricked.rule_engine.commons.Constants;
+import com.example.debricked.rule_engine.exception.EmptyFileArgumentException;
 import com.example.debricked.rule_engine.model.DependencyFile;
 import com.example.debricked.rule_engine.model.FileUploadTransaction;
 import com.example.debricked.rule_engine.repository.DependencyFileRepository;
@@ -31,6 +32,10 @@ public class FileProcessingService {
 
         try {
             byte[] content = file.getBytes();
+            if(content.length==0){
+                String message = String.format("%s file name is empty", file.getOriginalFilename());
+                throw new EmptyFileArgumentException(message);
+            }
             dependencyFile.setFile(content);
             dependencyFile.setScanStatus(Constants.SAVED);
         } catch (IOException e) {
@@ -40,20 +45,6 @@ public class FileProcessingService {
         return repository.save(dependencyFile);
     }
 
-//    public List<DependencyFile> processAllFiles(MultipartFile[] files, FileUploadTransaction fileUploadTransaction){
-//        List<DependencyFile> resultList =new ArrayList<>();
-//        List<Integer> idList= new ArrayList<>();
-//
-//        for(MultipartFile file: files){
-//            DependencyFile dependencyFile=processFile(file, fileUploadTransaction);
-//            resultList.add(dependencyFile);
-//            idList.add(dependencyFile.getId());
-//        }
-//
-//
-//
-//        return resultList;
-//    }
 
     public void updateStatusByUploadId(String uploadId, String status){
         List<DependencyFile> dependencyFiles = repository.findAllByCiUploadId(uploadId);

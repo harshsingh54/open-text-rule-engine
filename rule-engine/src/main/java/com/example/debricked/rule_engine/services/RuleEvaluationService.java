@@ -43,8 +43,11 @@ public class RuleEvaluationService {
             List<String> messages = generateMessagesFromTriggerEvents(filteredRules);
             List<String> emailList = entry.getValue().stream().map(DependencyFile::getEmail).distinct()
                     .collect(Collectors.toList());
-
-            mailerService.sendEmailToOwners(emailList, messages);
+            if(messages!=null && !messages.isEmpty()){
+                mailerService.sendEmailToOwners(emailList, messages);
+            }else{
+                log.info("No alerts to be sent for upload id : {}", entry.getKey());
+            }
         }
     }
 
@@ -54,15 +57,15 @@ public class RuleEvaluationService {
         for (AutomationRule rule:automationRules) {
             String description = String.format("Rule : %s", rule.getRuleDescription());
             messages.add(description);
-            messages.add("\n");
+            messages.add("\nReported Vulnerabilities : ");
             List<String> cveMsgs = rule.getTriggerEvents().stream()
-                    .map(event-> String.format("%s reported for dependency : %s",event.getCve(), event.getDependency()))
+                    .map(event-> String.format("\t* %s reported for dependency : %s",event.getCve(), event.getDependency()))
                     .collect(Collectors.toList());
 
             if (cveMsgs!=null){
-                log.info("CVE msg : {}", cveMsgs.get(0));
+                System.out.println("CVE msg : {}"+ cveMsgs.get(0));
                 messages.addAll(cveMsgs);
-                messages.add("\n\n");
+                messages.add("\n");
             }
 
         }

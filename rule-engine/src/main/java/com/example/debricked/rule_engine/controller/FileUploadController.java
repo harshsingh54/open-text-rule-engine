@@ -1,15 +1,18 @@
 package com.example.debricked.rule_engine.controller;
 
 
+import com.example.debricked.rule_engine.exception.NullFileArgumentException;
 import com.example.debricked.rule_engine.model.DependencyFile;
 import com.example.debricked.rule_engine.model.FileUploadTransaction;
 import com.example.debricked.rule_engine.services.DebrickedService;
 import com.example.debricked.rule_engine.services.FileProcessingService;
+import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.google.common.base.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,17 @@ public class FileUploadController {
     @PostMapping("/v1/upload")
     public ResponseEntity<List<DependencyFile>> uploadFiles(@RequestPart("files") MultipartFile[] files,
                                                             FileUploadTransaction fileUploadTransaction) {
+//        Preconditions
+        Preconditions.checkArgument(StringUtils.isNotBlank(fileUploadTransaction.getEmail()), "Email required to notify");
+
+        Preconditions.checkArgument(StringUtils.isNotBlank(fileUploadTransaction.getRepositoryName()), "'repositoryName' is a required field");
+
+        Preconditions.checkArgument(StringUtils.isNotBlank(fileUploadTransaction.getCommitName()), "'commitName' is a required field");
+
+        if(files==null){
+            throw new NullFileArgumentException();
+        }
+
         log.info("Processing file : {}", files.length);
         log.info("FileUploadTransaction : {}", fileUploadTransaction);
 
@@ -45,18 +59,4 @@ public class FileUploadController {
         return ResponseEntity.ok(resultList);
     }
 
-//    @PostMapping("/v2/upload")
-//    public ResponseEntity<List<DependencyFile>> uploadFilesPostman(@RequestPart("files") MultipartFile[] files,
-//                                                                   @RequestPart String email, @RequestPart String version,
-//                                                                   @RequestPart String repositoryName, @RequestPart String commitName,
-//                                                                   @RequestPart String branchName) {
-//        log.info("Processing file : {}", files.length);
-//        log.info("FileUploadTransaction : {}", email);
-//        List<DependencyFile> processedFiles =
-//                List.of(files).stream()
-//                        .map(fileProcessingService::processFile)
-//                        .collect(Collectors.toList());
-//
-//        return ResponseEntity.ok(processedFiles);
-//    }
 }
