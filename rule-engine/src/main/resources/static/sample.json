@@ -1,0 +1,111 @@
+{
+  "dependencyFiles": {
+    "103025265": {
+      "fileName": "maven.debricked.lock",
+      "vulnerabilitiesCount": 1,
+      "progress": 100,
+      "vulnerabilities": [
+        {
+          "cveId": "CVE-2024-31573",
+          "cvss": "N/A",
+          "dependencies": [
+            {
+              "dependencyName": "org.xmlunit:xmlunit-core",
+              "version": "2.9.1"
+            }
+          ]
+        }
+      ]
+    },
+    "103025285": {
+      "fileName": "maven.debricked.lock",
+      "vulnerabilitiesCount": 1,
+      "progress": 100,
+      "vulnerabilities": [
+        {
+          "cveId": "CVE-2024-31573",
+          "cvss": "N/A",
+          "dependencies": [
+            {
+              "dependencyName": "org.xmlunit:xmlunit-core",
+              "version": "2.9.1"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "progress": 100,
+  "vulnerabilitiesFound": 1,
+  "unaffectedVulnerabilitiesFound": 0,
+  "automationsAction": "warn",
+  "policyEngineAction": "warn",
+  "vulnerabilityOutputLimited": false,
+  "automationRules": [
+    {
+      "ruleDescription": "If a new dependency is added where the license risk is at least medium\nthen notify all users in the group admins by email",
+      "ruleActions": [
+        "sendEmail"
+      ],
+      "ruleLink": "https://debricked.com/app/en/automations/93050?ruleId=491550",
+      "hasCves": false,
+      "triggered": false,
+      "triggerEvents": []
+    },
+    {
+      "ruleDescription": "If there is a dependency where the license risk is at least high\nthen send a pipeline warning",
+      "ruleActions": [
+        "warnPipeline"
+      ],
+      "ruleLink": "https://debricked.com/app/en/automations/93050?ruleId=491549",
+      "hasCves": false,
+      "triggered": false,
+      "triggerEvents": []
+    },
+    {
+      "ruleDescription": "If a dependency contains a vulnerability which has not been marked as unaffected and which has not triggered this rule for this dependency before\nthen notify all users in the group admins by email",
+      "ruleActions": [
+        "sendEmail"
+      ],
+      "ruleLink": "https://debricked.com/app/en/automations/93050?ruleId=491552",
+      "hasCves": true,
+      "triggered": true,
+      "triggerEvents": [
+        {
+          "dependency": "org.xmlunit:xmlunit-core (Maven)",
+          "dependencyLink": "https://debricked.com/app/en/dependency/20176?repositoryId=93050",
+          "licenses": [
+            "Apache-2.0"
+          ],
+          "cve": "CVE-2024-31573",
+          "cveLink": "https://debricked.com/app/en/vulnerability/307009?repositoryId=93050&commitId=2785241",
+          "cvss2": 0,
+          "cvss3": 0
+        }
+      ]
+    },
+    {
+      "ruleDescription": "If a dependency contains a vulnerability which has not been marked as unaffected\nthen send a pipeline warning",
+      "ruleActions": [
+        "warnPipeline"
+      ],
+      "ruleLink": "https://debricked.com/app/en/automations/93050?ruleId=491551",
+      "hasCves": true,
+      "triggered": true,
+      "triggerEvents": [
+        {
+          "dependency": "org.xmlunit:xmlunit-core (Maven)",
+          "dependencyLink": "https://debricked.com/app/en/dependency/20176?repositoryId=93050",
+          "licenses": [
+            "Apache-2.0"
+          ],
+          "cve": "CVE-2024-31573",
+          "cveLink": "https://debricked.com/app/en/vulnerability/307009?repositoryId=93050&commitId=2785241",
+          "cvss2": 0,
+          "cvss3": 0
+        }
+      ]
+    }
+  ],
+  "detailsUrl": "https://debricked.com/app/en/repository/93050/commit/2785241"
+}
